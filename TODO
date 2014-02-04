@@ -1,0 +1,15 @@
+Rewrite to read first 2 - 4 bytes, determine encoding, and strip as required.
+
+Generalize to be a wrapper for iconv, autodetecting input encoding and 
+generating requested output (defaulting to utf-8)
+
+from vim documentation:
+							*bom-bytes*
+When reading a file a BOM (Byte Order Mark) can be used to recognize the
+Unicode encoding:
+	EF BB BF     utf-8
+	FE FF        utf-16 big endian
+	FF FE        utf-16 little endian
+	00 00 FE FF  utf-32 big endian
+	FF FE 00 00  utf-32 little endian
+
