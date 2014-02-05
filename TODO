@@ -13,3 +13,5 @@ Unicode encoding:
 	00 00 FE FF  utf-32 big endian
 	FF FE 00 00  utf-32 little endian
 
+irb(main):002:0> "foo".methods.grep /encod/
+=> [:encoding, :force_encoding, :valid_encoding?, :encode, :encode!]
