@@ -2,6 +2,7 @@ Rewrite to read first 2 - 4 bytes, determine encoding, and strip as required.
 
 Generalize to be a wrapper for iconv, autodetecting input encoding and 
 generating requested output (defaulting to utf-8)
+"autoconv" or "28"
 
 from vim documentation:
 							*bom-bytes*
@@ -15,3 +16,15 @@ Unicode encoding:
 
 irb(main):002:0> "foo".methods.grep /encod/
 => [:encoding, :force_encoding, :valid_encoding?, :encode, :encode!]
+
+So, we read in the first 4 bytes and save them. We check against those 5 values,
+and if it matches we know what the input coding is. If it does not match, we
+hope it is WINDOWS-1252 or ASCII. How do we check? In ruby, :valid_encoding?
+2 concerns:
+  misinterpreting ASCII as WINDOWS-1252 & vice-versa
+  misinterpreting binary data as an encoding
+For these we might have to keep checking encoding all the way through the byte-
+stream. To start might just always do that, then llok into hwo much of a hit
+that is when it's not necessary.
+
+
